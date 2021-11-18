@@ -1,21 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
-#from PIL import Image
+from PIL import Image
 from numpy import asarray
 from MatrixOpLibrary import matmat,matvec,scaled_mat,id_mat,rotation_mat_2d
 from math import ceil
 
+image =Image.open("Output_Images/girl.png")
+#image = (plt.imread("Output_Images/girl.png"))
+#scaled_image = scaled_mat(image,4)
 #-----------Set each pixel color equal to the average color values of its neighbors------------------
 
-def average_coloring(im):
-
-    img = asarray(im)
+def average_coloring(im,scale_fac,nghbrs):
+    img = im
+    #img = asarray(im)
     (mG, nG, dimG) = img.shape
 
     # compress_image
     # Shrink dimension of image (original to half or chosen n)
 
-    compress_factor = 2
+    compress_factor = scale_fac
     scaling_factor = 1/compress_factor
     new_img_cols = [row[::compress_factor] for row in img]
     new_img_rows = asarray([new_img_cols[i] for i in range(0, len(img), compress_factor)])
@@ -23,40 +26,75 @@ def average_coloring(im):
     # blur image by setting each pixel to be the average of its neighboring pixels
     # (this created a coloring affect rather than a blur)
     # dimensions
+    
     m = len(img)-1
     n = len(img[0])-1
+    if nghbrs == 'adjacent':
+        # corner cases (divide by 2 neighbors)
+        img[0][0] = (img[1][0] + img[0][1]) / 2
+        img[m][n] = (img[m - 1][n] + img[m][n - 1]) / 2
+        img[m][0] = (img[m - 1][0] + img[m][1]) / 2
+        img[0][m] = (img[0][m - 1] + img[1][m]) / 2
 
-    # corner cases (divide by 2 neighbors)
-    img[0][0] = (img[1][0] + img[0][1]) / 2
-    img[m][n] = (img[m - 1][n] + img[m][n - 1]) / 2
-    img[m][0] = (img[m - 1][0] + img[m][1]) / 2
-    img[0][m] = (img[0][m - 1] + img[1][m]) / 2
+        # Edge column and row cases without corners (divide by 3 neighbors)
+        for i in range(m):
+            for j in range(n):
+                img[0][j] = (img[0][j-1]+img[0][j+1]+img[i+1][j])/3
+                img[0][j][3] = 255
 
-    # Edge column and row cases without corners (divide by 3 neighbors)
-    for i in range(m):
-        for j in range(n):
-            img[0][j] = (img[0][j-1]+img[0][j+1]+img[i+1][j])/3
-            img[0][j][3] = 255
+                img[m][j] = (img[m][j-1]+img[m][j+1]+img[m-1][j])/3
+                img[m][j][3] = 255
 
-            img[m][j] = (img[m][j-1]+img[m][j+1]+img[m-1][j])/3
-            img[m][j][3] = 255
+                img[i][0] = (img[i-1][0]+img[i+1][0]+img[i][j+1])/3
+                img[i][0][3] = 255
 
-            img[i][0] = (img[i-1][0]+img[i+1][0]+img[i][j+1])/3
-            img[i][0][3] = 255
+                img[i][n] = (img[i-1][n]+img[i+1][n]+img[i][n-1])/3
+                img[i][n][3] = 255
 
-            img[i][n] = (img[i-1][n]+img[i+1][n]+img[i][n-1])/3
-            img[i][n][3] = 255
+        # Pixels inside of bordering rows and columns (divide by 4 neighbors)
+        for i in range(1, n-1):
+            for j in range(1, m-1):
+                img[i][j] = (img[i][j-1]+img[i][j+1]+img[i-1][j]+img[i+1][j])/4
+                img[i][j][3] = 255
 
-    # Pixels inside of bordering rows and columns (divide by 4 neighbors)
-    # create fade that is lighter on outside and darker on inside, use exponential?
-    for i in range(1, n-1):
-        for j in range(1, m-1):
-            img[i][j] = (img[i][j-1]+img[i][j+1]+img[i-1][j]+img[i+1][j])/4
-            img[i][j][3] = 255
+        return img
 
-    return img
+    elif nghbrs == "all":
+        # corner cases (divide by 3 neighbors)
+        img[0][0] = (img[1][0] + img[0][1]+ img[1][1]) / 3
+        img[m][n] = (img[m - 1][n] + img[m][n - 1]+img[m-1][n-1]) / 3
+        img[m][0] = (img[m - 1][0] + img[m][1]+img[m-1][1]) / 3
+        img[0][m] = (img[0][m - 1] + img[1][m]+img[1][m-1]) / 3
 
-#plt.imsave("shrink_image.png", average_coloring(image))
+        # Edge column and row cases without corners (divide by 5 neighbors)
+        for i in range(m):
+            for j in range(n):
+                img[0][j] = (img[0][j-1]+img[0][j+1]+img[1][j]+img[1][j+1]+img[1][j-1])/5
+                img[0][j][3] = 255
+
+                img[m][j] = (img[m][j-1]+img[m][j+1]+img[m-1][j]+img[m-1][j-1]+img[m-1][j+1])/5
+                img[m][j][3] = 255
+
+                img[i][0] = (img[i-1][0]+img[i+1][0]+img[i][1]+img[i-1][1]+img[i+1][1])/5
+                img[i][0][3] = 255
+
+                img[i][n] = (img[i-1][n]+img[i+1][n]+img[i][n-1]+img[i+1][n-1]+img[i-1][n-1])/5
+                img[i][n][3] = 255
+
+        # Pixels inside of bordering rows and columns (divide by 8 neighbors)
+        for i in range(1, n-1):
+            for j in range(1, m-1):
+                img[i][j] = (img[i][j-1]+img[i][j+1]+img[i-1][j]+img[i+1][j]
+                + img[i-1][j-1]+img[i+1][j+1]+img[i-1][j+1]+img[i+1][j-1])/8
+                img[i][j][3] = 255
+        return img
+    
+    else:
+         return img
+# op = average_coloring(image,2,'all')
+# print(op[0])
+img1 = np.array(Image.open("Output_Images/girl.png"))
+plt.imsave("av_image.png", average_coloring(img1,2,'adjacent'))
 
 #--------------Multiply an image by Identity Matrix to get unchanged image-----------------------
 #--------------Multiply an image by Identity Matrix with alpha !=1 to get brighter Image---------
@@ -71,12 +109,13 @@ def average_coloring(im):
 # matprod_ID_Image = matmat(scaled_image, id_n)
 # plt.imsave("IDtransform.png", matprod_ID_Image)
 
-# #Compressed Image x Matrix with diagonal entries = 2
-# #all colors now outside interval [0,255] so image will be much brighter in appearance
+#Compressed Image x Matrix with diagonal entries = 2
+#all colors now outside interval [0,255] so image will be much brighter in appearance
 # cNa, cMa = len(scaled_image),len(scaled_image[0])
 # nA = min([cNa,cMa])
 # id_nA = id_mat(nA,2)
 # matprod_alpha_Image = matmat(scaled_image, id_nA)
+
 # plt.imsave("ALPHAtransform.png", matprod_alpha_Image)
 
 #--------------Multiply each image pixel by greyscale matrix to convert to greyscale------------------
