@@ -52,7 +52,7 @@
 
               <ol>1. First check is the matrix is square, meaning its number of rows equal its number of columns</ol> 
               <ol>2. Next create an array of row indices (three rows implies our array is [1,2,3] ) </ol> 
-              <ol>3. Use Python's Math library to find all possible permutations of this array  </ol>  
+              <ol>3. Use Python's itertools library to find all possible permutations of this array  </ol>  
               <ol> - [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2] (notice the number of arrangements is 3!)</ol>
               <ol>4. Next,loop through each row arrangement of the matrix as given by each permutation </ol> 
               <ol>5. Check if either diagonals contain only nonzero entries as that is a key criteria of triangular matrices</ol> 
@@ -62,15 +62,16 @@
             <h2>Example</h2>
             <div class="Example"> 
                 <div>
-                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/mat_images/tri_ex.png"style="position:absolute; top:100px;left:900px; height: 600; width: 500;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/mat_images/tri_ex.png"style="height: 120; width: 400;">
                   </div> 
               </div>
+              <li>Notice the original indices, [1,2,3,4], are then mapped to [2,4,3,1] and "Upper Right Triangular" is returned</li>  
 
             <h2>Tools Used</h2>
             <div class="Tools_List"> 
 
               <li>Python </li>  
-              <li>Numpy</li>   
+              <li>Python itertools and permutations</li>   
              
             </div>
           </div>
@@ -79,7 +80,7 @@
     </div>   
     
     <div>
-      <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/mat_images/Uppers_Lowers.png"style="position:absolute; top:100px;left:900px; height: 600; width: 500;">
+      <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/mat_images/Uppers_Lowers.png"style="position:absolute; top:250px;left:900px; height: 400; width: 300;">
     </div> 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
