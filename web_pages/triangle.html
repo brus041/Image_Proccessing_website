@@ -41,17 +41,23 @@
         <div class="row">
           <div class="col-md-8">
             <h2>Finding Triangular Configuration of Matrices</h2>
-            <div class="paragraph1"> <p class = "Summary"> info
+            <div class="paragraph1"> <p class = "Summary"> This section seeks to explore triangular matrices and their specific structure. 
+                Triangular matrices are particularly useful for quicker row reduction using forward or backward substitution. This algorithm
+                takes in a matrix as input, and determines if its rows can be rearanged to yeild a triangular matrix in any of the 4 forms.
+                If a configuration does not exist, " No Triangular Configurations Exist!" is returned. 
 
             </p></div>
             <h2>Process</h2>
             <div class="process"> 
 
-              <ol>knnlnlnln</ol> 
-              <ol>knnlnlnln</ol> 
-              <ol>knnlnlnln</ol>   
-              <ol>knnlnlnln</ol> 
-              
+              <ol>1. First check is the matrix is square, meaning its number of rows equal its number of columns</ol> 
+              <ol>2. Next create an array of row indices (three rows implies our array is [1,2,3] ) </ol> 
+              <ol>3. Use Python's Math library to find all possible permutations of this array  </ol>  
+              <ol> - [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,2,1],[3,1,2] (notice the number of arrangements is 3!)</ol>
+              <ol>4. Next,loop through each row arrangement of the matrix as given by each permutation </ol> 
+              <ol>5. Check if either diagonals contain only nonzero entries as that is a key criteria of triangular matrices</ol> 
+              <ol>6. Determine if the matrix is Lower Left, Lower Right, Upper Left, Upper Right Triangular </ol> 
+              <ol>7. Return the matrix configuration that has the row arrangement corresponding to the array of indices </ol>  
             </div>
 
             <h2>Tools Used</h2>
