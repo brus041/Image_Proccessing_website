@@ -27,7 +27,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/coloring.html">Coloring Images</a>
             <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/rotation.html">Rotating Images</a>
-            <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/grid_ns.html"> Average Color of Nearest Neighbors</a>
+            <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/grid_ns.html"> Pixel Neighbors</a>
             <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/affine.html"> Image Gradient Using Affine Transformations</a>
             <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/regression.html">Using Regression to Blur an Image</a>
             <a class="dropdown-item" href="https://brus041.github.io/Image_Proccessing_website/web_pages/triangle.html">Finding Triangular Orientations of Matrices</a>
@@ -40,19 +40,54 @@
     <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <h2>Pixel Neighbors and Average Color Value</h2>
-            <div class="paragraph1"> <p class = "Summary"> Paragraph
+            <h2>Pixel Neighbors, Average Color Value, and Attempted Edge Detection</h2>
+            <div class="paragraph1"> <p class = "Summary"> The purpose of this section was to find the neighbors of each pixel in given image.
+                Part of the implementation was to select either adjacent neigbors (above,below,left,right) or all neigbors 
+                (above,below,left,right, and both diagonals). Upon finding the surrounding pixels, the average color of all neighbors was 
+                computed and then assigned to the central pixel. The result is a unique coloration of the image. Now, while coloring the image
+                was a biproduct of finding a pixel's neighbors, this can be expanded to perhaps n neighbors in each direction or to 
+                iterating through an image in a different way. Using a pixel's neigbors, I attempted to find edges (or places of sharp color contrast)
+                using the 2-norm between any two points. This however did not work as expected but still proved to be an interesting task. Perhaps using a 
+                different norm (1,infinity,0,etc) would yeild different results. 
             </p></div>
-            <h2>Process</h2>
+            <h2>Process for Finding Neighbors</h2>
             <div class="process"> 
 
-              <ol>1.  </ol> 
-              <ol>2.  </ol> 
-              <ol>3.  </ol> 
-              <ol>4.  </ol> 
-              <ol>5.  </ol> 
-              <ol>6.  </ol> 
-              <ol>7.  </ol>  
+              <ol>1. Read in our image using PIL, convert it to a numpy array, and scale it down to speed up the process of the algorithm </ol> 
+              <ol>2. Find the dimensions of the image in order to iterate through its entirety </ol> 
+              <ol>3. Select either adjacent or all neigbors  </ol> 
+              <ol>4. Begin iterating through the image </ol> 
+              <ol>- note: refer to the figures to see how different pixel locations contain a different number of neigbors  </ol> 
+              <ol>5. Compute the average color at each location and set that value as the new pixel value  </ol> 
+              <ol>6. Use plt.imsave from matplotlib.pyplot to save our resulting image </ol>  
+            </div>
+            
+            <h2>Examples</h2>
+            <div class="Example1"> 
+                <div>
+                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                  </div> 
+              </div>
+              <li> Caption</li>  
+              <div class="Example2"> 
+                <div>
+                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                  </div> 
+              </div>
+              <li> Caption</li>  
+
+              <h2>Process for Edge Detection Attempt</h2>
+            <div class="process"> 
+
+              <ol>1. Read in our image using PIL, convert it to a numpy array, and scale it down to speed up the process of the algorithm  </ol> 
+              <ol>2. Convert the image to grey scale in order for each pixel's rgb values to be equal (ex. (.5,.5,.5)).  </ol> 
+              <ol>3. Find the dimensions and begin iterating through the image</ol> 
+              <ol>4. At each location, compute the adjacent and diagonal neigbors and combine the two arrays</ol> 
+              <ol>5. Again, at each location, compute an array derived by applyting the 2-norm (or distance) between the respective location's color value and each of its neighbor's color values </ol> 
+              <ol>- note: the distance is referencing how much a color is different from another. See the figure below.</ol>
+              <ol> INCLUDE LEAFLET IMAGE OF THE TWO NORM BETWEEN TWO COLORS</ol>
+              <ol>6. If any element in our new array exceeds a chosen contrast, color that location red.</ol> 
+              <ol>7. Save our resulting image using plt.imsave from matplotlib.pyplot </ol>  
             </div>
             <h2>Example</h2>
             <div class="Example"> 
@@ -66,7 +101,9 @@
             <div class="Tools_List"> 
 
               <li>Python</li>  
-              <li> </li>   
+              <li>Math Library</li>  
+              <li>numpy</li> 
+              <li>matplotlib.pyplot</li>
              
             </div>
           </div>

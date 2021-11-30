@@ -41,21 +41,59 @@
         <div class="row">
           <div class="col-md-8">
             <h2>Coloring Images</h2>
-            <div class="paragraph1"> <p class = "Summary"> Paragraph
+            <div class="paragraph1"> <p class = "Summary"> Coloring images can be done in a variety of ways. This portion focuses on
+                color to greyscale, color to black and white, and adding a color hue over the image, all with matrix-vector multiplication. 
+                Something to note during this project was that Matplotlib.pyplot reads in images on a [0,1] scale, whereas PIL.Image reads in images 
+                on a [0,255] scale. For example red would be represented as (1,0,0,1) versus (255,0,0,255). Many early functions that were created during the project were based on the [0,255] scale, thus 
+                resulting in having to multiply an Image input by 1/255 when using Matplotlib.pyplot.
             </p></div>
             <h2>Process</h2>
             <div class="process"> 
 
-              <ol>1.  </ol> 
-              <ol>2.  </ol> 
-              <ol>3.  </ol> 
-              <ol>4.  </ol> 
-              <ol>5.  </ol> 
-              <ol>6.  </ol> 
-              <ol>7.  </ol>  
+              <ol>1. Read in the image using PIL, convert to numpy array, and scale to speed up the process </ol> 
+              <ol>2. For grey-scale: find image dimensions, initialize grey scale matrix, iterate through image and compute matrix-vector multiplication
+                  between the greyscale matrix and the rgb color vector at that pixels location, compute the sum of elements in the resulting vector,
+                  create new rgb touple with each element being equal to the computed sum, replace original pixels color value with greyscale one </ol> 
+              <ol>3. For black and white: read in image, convert to greyscale, find dimensions, calculate the average intensity of all pixels, iterate through image
+                  while checking if each pixel is less than or greater than the average intensity, set pixel color to black if it is less than avearage intensity, and finally set 
+                  pixel color to white if it is greater than the aveage intensity.
+              </ol> 
+              PICTURE OF GREYSCALE MATRIX
+              <ol>4. For color hues: Read in and scale our image, initialize a diagonal matrix similair to the greyscale matrix where different color intensities lie 
+                  on the diagonal, iterate through the image and compute matrix-vector multiplication at each location, override original image pixel values with those of the products computed
+              </ol> 
+              <ol>-note: this can also be done using pointwise vector-vector multiplication by initializing a color vector ( of the form (r,g,b,1) instead of a diagonal matrix (as shown above) )</ol> 
+              <ol>6. For Matrix-Matrix Multiplication between Images and Matrices: Read in image, initialize Identity matrix, compute matrix-matrix multiplication, save final result  </ol> 
+              <ol>- note: Multiplying an image by an identity matrix will leave it unchanged, however setting the diagonal entries equal to a scalar not equal to 1 will yeild 
+                  interesting color effects (rendering an image much brighter/duller as the rgb values will be outside of the [0,255] range)
+              </ol>
+              <ol>7. For each section, save the final result using plt.imsave from matplotlib.pyplot  </ol>  
             </div>
-            <h2>Example</h2>
-            <div class="Example"> 
+            <h2> Grey Scale Example</h2>
+            <div class="ExampleG"> 
+                <div>
+                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                  </div> 
+              </div>
+              <li> Caption</li> 
+              <h2> Black and White Example</h2>
+            <div class="ExampleBW"> 
+                <div>
+                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                  </div> 
+              </div>
+              <li> Caption</li> 
+             
+              <h2> Color Hue Example</h2>
+            <div class="ExampleH"> 
+                <div>
+                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                  </div> 
+              </div>
+              <li> Caption</li>  
+
+              <h2> Matrix-Matrix Multiplication Example</h2>
+            <div class="ExampleM"> 
                 <div>
                     <img class = "rgb" src="#"style="height: 100; width: 300;">
                   </div> 
@@ -66,7 +104,10 @@
             <div class="Tools_List"> 
 
               <li>Python</li>  
-              <li> </li>   
+              <li>numpy </li>   
+              <li>PIL</li>
+              <li>Math Library</li>
+              <li>matplotlib.pyplot</li>
              
             </div>
           </div>

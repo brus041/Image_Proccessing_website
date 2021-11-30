@@ -41,18 +41,39 @@
         <div class="row">
           <div class="col-md-8">
             <h2> Using Regression to Blur an Image</h2>
-            <div class="paragraph1"> <p class = "Summary"> Paragraph
+            <div class="paragraph1"> <p class = "Summary"> Perhaps the most challenging to implement, this section originally started
+                out as an attempt to colorize grey scale images by predicting color values based on a similiar image's pixel locations. 
+                Two different approaches were utlized here, one with multivariate linear regression, and one with multivariate 
+                polynomial regression. Linear regression was more straight foward in implementation but had rather unfavorable results.
+                Polynomial regeression on the other hand gave some interesting results, but required testing several different 
+                degrees for the polynomials used. The difficulties encountered in trying to colorize images using this approach 
+                was overlaying the predicted colors onto the original grey scale image. This will be discussed in more detail in 
+                the Process section, but hitting this barrier resulted in modifying the code and recognizing that it produced 
+                blurred, colorized, images with very little traits of the original image. Little visible traits of course is favorable in concealing
+                an identity when blurring an image, therefore implying the code did its job! 
+
+                (ADD OVERLEAF THEORY PIC on polynomial regression)
             </p></div>
-            <h2>Process</h2>
+            <h2>Process for Linear Regression</h2>
             <div class="process"> 
 
-              <ol>1.  </ol> 
-              <ol>2.  </ol> 
-              <ol>3.  </ol> 
-              <ol>4.  </ol> 
-              <ol>5.  </ol> 
-              <ol>6.  </ol> 
-              <ol>7.  </ol>  
+              <ol>1. Read in colored PNG image with Matplotlib and convert it to a numpy array. We then scale the image down by a factor of 4 to speed up the process.  </ol> 
+              <ol>2. Find the dimensions of our image where m is the number of rows and n is the number of columns </ol> 
+              <ol>3. Create a Pandas data frame with the following 5 columns: X coordinate, Y coordinate, red value, green value, blue value  </ol> 
+              <ol>4. Check that the dimensions of the data frame is m*n rows by 5 columns</ol> 
+              <ol>5. Perform multivariate linear regression with the X coordinate and Y coordinate columns serving as the explantory variables and the color values being the response variables </ol> 
+              <ol> - note: since we have 3 color channels, the followibg procedure is performed 3 times.   </ol>
+              <ol>6. This entails using sklearn's LinearRegression function to obtain a y-intercept, coefficents at each (x,y) coordinate, and create a trend line </ol> 
+              <ol>7. Next the predicted red, green, and blue values are predicted by plugging in each (x,y) coordinate from the original image</ol>  
+              <ol> - note: we obtain 3 seperate arrays for predicted red, green, and blue values as there is a trend line for each color channel </ol> 
+              <ol>8. Use python's zip function on the three arrays to create an array of touples where each touple represents a pixel's rgb values  </ol> 
+              <ol> - note: the structure of this array is [(r,g,b)...(r,g,b)] </ol> 
+              <ol>9. Append 1 to each touple in order to include the intensity channel at each pixel. </ol> 
+              <ol>10. Shape the array of predicted touples into the same dimensions as our original image </ol> 
+              <ol>11. For each pixel in the original image, overwrite it with the aquired predicted pixel as given by the linear regression procedure</ol> 
+              <ol>12. The process is now complete but as noted in the description, it isnt very flattering!</ol> 
+
+
             </div>
             <h2>Example</h2>
             <div class="Example"> 
@@ -62,11 +83,39 @@
               </div>
               <li> Caption</li>  
 
+              <h2>Process for Polynomial Regression</h2>
+              <div class="process"> 
+  
+                <ol>1. Steps 1-4 are the same as the procedures explained in the linear regression example.  </ol> 
+                <ol>5. Perform multivariate polynimial regression with the X coordinate and Y coordinate columns serving as the explantory variables and the color values being the response variables </ol> 
+                <ol> - note: since we have 3 color channels, the followibg procedure is performed 3 times.   </ol>
+                <ol>6. Use sklearn's PolynomialFeatures and LinearRegression functions to transform our explantory variables, fit our new data, and then predict our color values.   </ol>
+                <ol>7. Pick the largest possible degree of polynomial as that will reveal the "most" features in our blurred image. The lower the degree polynomial, the less features become visible.
+                    This is neccessary as each degree produces different coefficients for our lines of fit and as a result certain predicted color values fall outside of the range [0,1]. 
+                    This implies python will not be able to read invalid color values into our resulting image. </ol> 
+                <ol> - note: Step 7 was done as a trial and error method, however this can be implemented by cycling through polynomials of incrimented degrees and 
+                       checking if any of the resulting predicted pixels contain either negative values or values greater than 1.  </ol> 
+                <ol>11. Steps 7-11 are the same as the procedures explained in the linear regression example.  </ol> 
+                <ol>12. The process is now complete and as noted in the description, is much more flattering than that of linear regeression!</ol> 
+  
+  
+              </div>
+              <h2>Example</h2>
+              <div class="Example"> 
+                  <div>
+                      <img class = "rgb" src="#"style="height: 100; width: 300;">
+                    </div> 
+                </div>
+                <li> Caption</li>  
             <h2>Tools Used</h2>
             <div class="Tools_List"> 
 
               <li>Python</li>  
-              <li> </li>   
+              <li>Pandas</li>   
+              <li>Numpy</li>
+              <li>LinearRegression from sklearn.linear_model</li> 
+              <li>PolynomialFeatures from sklearn.preprocessing</li>  
+              <li>Matplotlib.pyplot</li>
              
             </div>
           </div>
