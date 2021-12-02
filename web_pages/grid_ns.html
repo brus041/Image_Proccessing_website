@@ -66,15 +66,11 @@
             <div class="Example1"> 
                 <div>
                     <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Nghbrs/avg_image.png"style="height: 300; width: 300;">
-                  </div> 
-              </div>
-              <li> The result of using only adjacent neigbors. </li>  
-              <div class="Example2"> 
-                <div>
                     <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Nghbrs/adj_image.png"style="height: 300; width: 300;">
                   </div> 
               </div>
-              <li> The result of using all neigbors.</li>  
+              <li> The results of using only adjacent neigbors followed by using all neighbors. </li>  
+              
 
               <h2>Process for Edge Detection Attempt</h2>
             <div class="process"> 
@@ -84,8 +80,7 @@
               <ol>3. Find the dimensions and begin iterating through the image</ol> 
               <ol>4. At each location, compute the adjacent and diagonal neigbors and combine the two arrays</ol> 
               <ol>5. Again, at each location, compute an array derived by applyting the 2-norm (or distance) between the respective location's color value and each of its neighbor's color values </ol> 
-              <ol>- note: the distance is referencing how much a color is different from another. See the figure below.</ol>
-              <ol> INCLUDE LEAFLET IMAGE OF THE TWO NORM BETWEEN TWO COLORS</ol>
+              <ol>- note: the distance is referencing how much a color is different from another based on all three color channels. </ol>
               <ol>6. If any element in our new array exceeds a chosen contrast, color that location red.</ol> 
               <ol>7. Save our resulting image using plt.imsave from matplotlib.pyplot </ol>  
             </div>
@@ -95,7 +90,11 @@
                     <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Nghbrs/testing.png" style="height: 300; width: 300;">
                   </div> 
               </div>
-              <li> Caption</li>  
+              <li> This part of the website is still "under construction". This was included meerly as an application of cycling through
+                  a pixels neighbors and running desired functions. The result here seems to color pixels based on overall intensity rather than places of contrast. 
+                  Noteable the left eye is where contrast is present, however the intended result was to have line like strips or red, rather 
+                  than larger chunks as seen above. 
+              </li>  
 
             <h2>Tools Used</h2>
             <div class="Tools_List"> 
@@ -112,7 +111,7 @@
     </div>   
     
     <div>
-      <img class = "rgb" src=" https://brus041.github.io/Image_Proccessing_website/mat_images/ns.png"style="position:absolute; top:250px;left:900px; height: 400; width: 300;">
+      <img class = "rgb" src=" https://brus041.github.io/Image_Proccessing_website/mat_images/ns.png"style="position:absolute; top:100px;left:900px; height: 450; width: 480;">
     </div> 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
