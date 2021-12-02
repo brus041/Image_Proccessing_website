@@ -79,17 +79,19 @@
             <h2>Example</h2>
             <div class="Example"> 
                 <div>
-                    <img class = "rgb" src="#"style="height: 100; width: 300;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/Face.png"style=" position: relative; height: 300; width: 180;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/linear_regression.png"style=" position: relative; height: 300; width: 180;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/rgb_lines.png"style="height: 300; width: 280;">
                   </div> 
               </div>
-              <li> Caption</li>  
+                
 
               <h2>Process for Polynomial Regression</h2>
-              <div class="process"> 
+              <div class="process" style = "top: 300px;"> 
   
                 <ol>1. Steps 1-4 are the same as the procedures explained in the linear regression example.  </ol> 
                 <ol>5. Perform multivariate polynimial regression with the X coordinate and Y coordinate columns serving as the explantory variables and the color values being the response variables </ol> 
-                <ol> - note: since we have 3 color channels, the followibg procedure is performed 3 times.   </ol>
+                <ol> - note: since we have 3 color channels, the following procedure is performed 3 times.   </ol>
                 <ol>6. Use sklearn's PolynomialFeatures and LinearRegression functions to transform our explantory variables, fit our new data, and then predict our color values.   </ol>
                 <ol>7. Pick the largest possible degree of polynomial as that will reveal the "most" features in our blurred image. The lower the degree polynomial, the less features become visible.
                     This is neccessary as each degree produces different coefficients for our lines of fit and as a result certain predicted color values fall outside of the range [0,1]. 
@@ -103,9 +105,10 @@
               </div>
               <h2>Example</h2>
               <div class="Example"> 
-                  <div>
-                      <img class = "rgb" src="#"style="height: 100; width: 300;">
-                    </div> 
+                <div>
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/Face.png"style="height: 300; width: 180;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/colors_polynomial_regression.png"style="height: 300; width: 180;">
+                    <img class = "rgb" src="https://brus041.github.io/Image_Proccessing_website/New_Pictures/New_Blurs/rbg_parabs.png"style="height: 300; width: 280;">
                 </div>
                 <li> Caption</li>  
             <h2>Tools Used</h2>
